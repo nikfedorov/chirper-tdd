@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,6 +12,11 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    /**
+     * Don't use timestamps.
+     */
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +38,16 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Chirps created by User.
+     *
+     * @return HasMany<Chirp, $this>
+     */
+    public function chirps(): HasMany
+    {
+        return $this->hasMany(Chirp::class, 'creator_id');
+    }
 
     /**
      * Get the attributes that should be cast.
