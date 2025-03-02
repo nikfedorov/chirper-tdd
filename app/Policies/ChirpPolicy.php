@@ -14,4 +14,12 @@ class ChirpPolicy
     {
         return $chirp->creator->is($user);
     }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, Chirp $chirp): bool
+    {
+        return $chirp->creator->is($user);
+    }
 }

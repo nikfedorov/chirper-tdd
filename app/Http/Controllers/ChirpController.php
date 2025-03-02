@@ -57,4 +57,16 @@ class ChirpController extends Controller
 
         return redirect()->route('chirps.index');
     }
+
+    /**
+     * Delete a Chirp.
+     */
+    public function destroy(Chirp $chirp): RedirectResponse
+    {
+        Gate::authorize('delete', $chirp);
+
+        $chirp->delete();
+
+        return redirect(route('chirps.index'));
+    }
 }

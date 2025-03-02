@@ -68,3 +68,19 @@ it('marks updated chirps', function () {
     // assert
     $response->assertSee(__('edited'));
 });
+
+it('shows buttons to manage chirp', function () {
+
+    // arrange
+    $chirp = Chirp::factory()->create();
+
+    // act
+    $response = $this->withoutExceptionHandling()
+        ->actingAs($chirp->creator)
+        ->get(route('chirps.index'));
+
+    // assert
+    $response
+        ->assertSee(route('chirps.edit', $chirp))
+        ->assertSee('<form method="POST" action="'.route('chirps.destroy', $chirp).'">', false);
+});
