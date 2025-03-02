@@ -13,6 +13,8 @@ class Chirp extends Model
 
     /**
      * User who created this Chirp.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function creator(): BelongsTo
     {

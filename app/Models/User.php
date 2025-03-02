@@ -41,6 +41,8 @@ class User extends Authenticatable
 
     /**
      * Chirps created by User.
+     *
+     * @return HasMany<Chirp, $this>
      */
     public function chirps(): HasMany
     {
