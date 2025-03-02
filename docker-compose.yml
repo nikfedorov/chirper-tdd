@@ -22,9 +22,12 @@ services:
         networks:
             - sail
         depends_on:
-            - pgsql
-            - redis
-            - mailpit
+            pgsql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+            mailpit:
+                condition: service_started
     pgsql:
         image: 'postgres:17'
         ports:
@@ -50,6 +53,7 @@ services:
                 - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
+            interval: 5s
     redis:
         image: 'redis:alpine'
         ports:
@@ -65,6 +69,7 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+            interval: 5s
     mailpit:
         image: 'axllent/mailpit:latest'
         ports:
