@@ -52,3 +52,19 @@ it('shows chirp edit button', function () {
     // assert
     $response->assertSee(route('chirps.edit', $chirp));
 });
+
+it('marks updated chirps', function () {
+
+    // arrange
+    $chirp = Chirp::factory()
+        ->updated()
+        ->create();
+
+    // act
+    $response = $this->withoutExceptionHandling()
+        ->actingAs($chirp->creator)
+        ->get(route('chirps.index'));
+
+    // assert
+    $response->assertSee(__('edited'));
+});

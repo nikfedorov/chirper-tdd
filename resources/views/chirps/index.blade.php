@@ -22,6 +22,9 @@
                             <div>
                                 <span class="text-gray-800">{{ $chirp->creator->name }}</span>
                                 <small class="ml-2 text-sm text-gray-600">{{ $chirp->created_at->format('j M Y, g:i a') }}</small>
+                                @unless ($chirp->created_at->eq($chirp->updated_at))
+                                    <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
+                                @endunless
                             </div>
                             @if (auth()->user()->can('update', $chirp))
                                 <x-dropdown>

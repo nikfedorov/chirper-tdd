@@ -17,7 +17,7 @@ it('shows a chirp edit form', function () {
     $response
         ->assertOk()
         ->assertViewHas('chirp', $chirp)
-        ->assertSee('<form', false);
+        ->assertSee('<form method="POST" action="'.route('chirps.update', $chirp).'"', false);
 });
 
 it('doesnt show edit form to non-creator', function () {

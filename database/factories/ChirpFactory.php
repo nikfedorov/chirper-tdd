@@ -35,4 +35,15 @@ class ChirpFactory extends Factory
             'updated_at' => $at,
         ]);
     }
+
+    /**
+     * Create updated Chirp.
+     */
+    public function updated(): self
+    {
+        return $this->state([
+            'created_at' => fake()->dateTimeBetween('-1 month'),
+            'updated_at' => now(),
+        ]);
+    }
 }
