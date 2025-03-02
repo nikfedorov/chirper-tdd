@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\RateLimiter;
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
@@ -38,4 +39,20 @@ test('users can logout', function () {
 
     $this->assertGuest();
     $response->assertRedirect('/');
+});
+
+test('users can not authenticate when rate limiter is hit', function () {
+    $user = User::factory()->create();
+    $throttleKey = $user->email.'|127.0.0.1';
+    for ($i = 0; $i < 5; $i++) {
+        RateLimiter::hit($throttleKey);
+    }
+
+    $response = $this->postJson('/login', [
+        'email' => $user->email,
+        'password' => 'password',
+    ]);
+
+    $this->assertGuest();
+    $response->assertInvalid('email');
 });
