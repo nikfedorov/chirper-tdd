@@ -38,3 +38,17 @@ it('returns chirp creation form', function () {
     // assert
     $response->assertSee('<form method="POST" action="'.route('chirps.store').'">', false);
 });
+
+it('shows chirp edit button', function () {
+
+    // arrange
+    $chirp = Chirp::factory()->create();
+
+    // act
+    $response = $this->withoutExceptionHandling()
+        ->actingAs($chirp->creator)
+        ->get(route('chirps.index'));
+
+    // assert
+    $response->assertSee(route('chirps.edit', $chirp));
+});

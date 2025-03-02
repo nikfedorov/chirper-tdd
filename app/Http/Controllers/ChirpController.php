@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChirpStoreRequest;
 use App\Models\Chirp;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class ChirpController extends Controller
@@ -32,5 +33,15 @@ class ChirpController extends Controller
             ->create($request->validated());
 
         return redirect()->route('chirps.index');
+    }
+
+    /**
+     * Show a Chirp edit form.
+     */
+    public function edit(Chirp $chirp): View
+    {
+        Gate::authorize('update', $chirp);
+
+        return view('chirps.edit', compact('chirp'));
     }
 }
