@@ -1,15 +1,19 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-pest()->use(RefreshDatabase::class);
 
 it('has User attributes', function () {
 
     // arrange
-    $user = User::factory()->create();
+    $user = User::factory()
+        ->create()
+        ->fresh();
 
     // assert
-    expect($user)->name->toBe($user->name);
+    expect($user)->toHaveAttributes([
+        'name' => $user->name,
+        'email' => $user->email,
+        'email_verified_at' => $user->email_verified_at,
+        'created_at' => $user->created_at,
+    ]);
 });
