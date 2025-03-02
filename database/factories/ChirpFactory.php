@@ -22,4 +22,17 @@ class ChirpFactory extends Factory
             'message' => fake()->catchPhrase(),
         ];
     }
+
+    /**
+     * Create Chirp in the past.
+     */
+    public function past(): self
+    {
+        $at = fake()->dateTimeBetween('-1 month');
+
+        return $this->state([
+            'created_at' => $at,
+            'updated_at' => $at,
+        ]);
+    }
 }
