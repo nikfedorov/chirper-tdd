@@ -24,3 +24,17 @@ it('returns a list of chirps', function () {
         })
         ->assertSee($chirps->first()->message);
 });
+
+it('returns chirp creation form', function () {
+
+    // arrange
+    $user = User::factory()->create();
+
+    // act
+    $response = $this->withoutExceptionHandling()
+        ->actingAs($user)
+        ->get(route('chirps.index'));
+
+    // assert
+    $response->assertSee('<form method="POST" action="'.route('chirps.store').'">', false);
+});

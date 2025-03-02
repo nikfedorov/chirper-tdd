@@ -12,6 +12,13 @@ class Chirp extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     */
+    protected $fillable = [
+        'message',
+    ];
+
+    /**
      * User who created this Chirp.
      *
      * @return BelongsTo<User, $this>
